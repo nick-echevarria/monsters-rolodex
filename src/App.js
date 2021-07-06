@@ -2,7 +2,8 @@ import "./App.css";
 
 import React, { Component } from "react";
 
-import { CardList } from './components/cardlist/card-list.component.jsx';
+import { CardList } from "./components/cardlist/card-list.component.jsx";
+import { SearchBox } from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -10,7 +11,7 @@ class App extends Component {
 
     this.state = {
       monsters: [],
-      searchField: ''
+      searchField: "",
     };
   }
 
@@ -24,15 +25,19 @@ class App extends Component {
     // equivalent of const monster = this.state.monsters, etc.
     const { monsters, searchField } = this.state;
 
-    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase())
-    ); 
-    
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField.toLowerCase())
+    );
+
     return (
       <div className="App">
         {/* if we want to have some action run directly after a setState, we'll need to pass a callback
         directly after in order to have it run then and there */}
-        <input type='search' placeholder='Search monsters' onChange={e => this.setState({ searchField: e.target.value })}/>
-        <CardList monsters={filteredMonsters}/>
+        <SearchBox
+          placeholder="search monsters"
+          handleChange={(e) => this.setState({ searchField: e.target.value })}
+        />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
